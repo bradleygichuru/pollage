@@ -16,14 +16,23 @@ export const appRouter = trpc.router().mutation("poll-add", {
     let res = await prisma.poll.create({
       data: {
         name: input!.pollDescription,
-        options: { createMany: { data: [{ description: input!.opinion1 },{description:input!.opinion2}] } },
+        options: { createMany: { data: [{ description: input!.opinion1,count:0 },{description:input!.opinion2,count:0}] } },
       },
     });
     console.log(res)
     return {
-      input,
+      res,
     };
   },
+}).query("get-poll",{
+  input:z
+  .object({
+    id: z.string()
+  }).nullish(),
+  async resolve({input}){
+    let res = await prisma.poll.findUnique({where:{id:input?.id},include:{options:true}})
+    return res;
+  }
 });
 
 // export type definition of API
