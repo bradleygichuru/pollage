@@ -1,6 +1,15 @@
-import type { NextPage } from "next";
-
-const Vote: NextPage = () => {
+import type { GetServerSideProps, NextPage } from "next";
+import { useState } from "react";
+import { trpc } from "../../lib/trpc";
+//TODO handle votes
+const Vote: NextPage = (props: any) => {
+  const [vote, setVote] = useState("");
+  console.log(props.id);
+  const { data, error, isLoading } = trpc.useQuery([
+    "get-poll",
+    { id: props.id as string },
+  ]);
+  console.log(data);
   return (
     <div className="grid h-screen place-items-center">
       <p className="text-2xl font-titan">Pollage</p>
@@ -10,7 +19,7 @@ const Vote: NextPage = () => {
             afwawf
           </div>
           <p className="mt-5 font-extrabold	text-2xl font-jetbrains">
-            poll description
+            {data?.options[0].description}
           </p>
         </div>
         <p className="m-20 font-bold">vs</p>
@@ -19,7 +28,7 @@ const Vote: NextPage = () => {
             afwawf
           </div>
           <p className="mt-5 font-extrabold	text-2xl font-jetbrains">
-            poll description
+            {data?.options[1].description}
           </p>
         </div>
       </div>
@@ -27,3 +36,8 @@ const Vote: NextPage = () => {
   );
 };
 export default Vote;
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  let id = params?.id as string;
+  console.log(id);
+  return { props: { id } };
+};
