@@ -18,8 +18,8 @@ model Vote {
 }
 
 model Poll {
-  id String @id @default(cuid())
-  name String
+  id      String   @id @default(cuid())
+  name    String
   options Option[]
 }
 
@@ -28,4 +28,5 @@ model Option {
   description String
   poll        Poll   @relation(fields: [pollId], references: [id])
   pollId      String
+  count       Int @default(0)
 }
