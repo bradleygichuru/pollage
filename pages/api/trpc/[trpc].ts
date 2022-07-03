@@ -6,7 +6,7 @@ import { prisma } from "../../../lib/prisma";
 
 export const appRouter = trpc
   .router()
-  .mutation("poll-add", {
+  .mutation("add-poll", {
     input: z
       .object({
         opinion1: z.string(),
@@ -30,9 +30,7 @@ export const appRouter = trpc
         },
       });
       console.log(res);
-      return {
-        res,
-      };
+      return res;
     },
   })
   .mutation("cast-vote", {
