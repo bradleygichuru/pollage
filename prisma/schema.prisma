@@ -27,7 +27,7 @@ model Poll {
 model Opinion {
   id          String @id @default(cuid())
   description String
-  poll        Poll   @relation(fields: [pollId], references: [id])
+  poll        Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
   pollId      String
   count       Int @default(0)
 }
