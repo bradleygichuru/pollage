@@ -15,15 +15,16 @@ datasource db {
 model Vote {
   id   String @id @default(cuid())
   name String
+  
 }
 
 model Poll {
   id      String   @id @default(cuid())
   name    String
-  options Option[]
+  opinions Opinion[]
 }
 
-model Option {
+model Opinion {
   id          String @id @default(cuid())
   description String
   poll        Poll   @relation(fields: [pollId], references: [id])
