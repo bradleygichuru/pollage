@@ -1,25 +1,34 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdLibraryAdd } from "react-icons/md";
-
 import { trpc } from "../lib/trpc";
+import { BsHeartFill } from "react-icons/bs";
 
 const Home: NextPage = () => {
   const [opinion1, setOpinion1] = useState("");
   const [opinion2, setOpinion2] = useState("");
   const [pollDescription, setPollDescription] = useState("");
-  const pollMutation = trpc.useMutation(["poll-add"]);
-
+  const pollMutation = trpc.useMutation(["add-poll"]);
+  const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    pollMutation.mutate({
+
+    pollMutation.mutateAsync({
       opinion1: opinion1,
       opinion2: opinion2,
       pollDescription: pollDescription,
-    });
+    }).then(poll=>{
+      if(poll.id){
+
+           router.push(`http://localhost:3000/vote/${poll.id}`)};
+      }
+      )
+   
   };
+
 
   return (
     <div className="">
@@ -30,7 +39,6 @@ const Home: NextPage = () => {
       </Head>
       <div className="grid h-screen place-items-center">
         <p className="text-2xl font-nuto font-bold">Pollage</p>
-
         <label
           htmlFor="my-modal-3"
           className="flex border-4 border-[#808080] max-w-sm h-2/4 place-items-center btn modal-button	"
@@ -76,13 +84,18 @@ const Home: NextPage = () => {
               }}
             />
             <div className="btn">
-              <a href="" onClick={(e) => handleSubmit(e)} className="btn">
+              <button disabled={pollMutation.isLoading } onClick={(e) => handleSubmit(e)} className="btn">
                 Submit poll
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+        <div className="flex flex-row">
+          <h3>From Github with</h3> <BsHeartFill className="bg-red m-1"/>
+        </div>
+      </footer>
     </div>
   );
 };
