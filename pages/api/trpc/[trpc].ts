@@ -11,7 +11,7 @@ export const appRouter = trpc
       .object({
         opinion1: z.string(),
         opinion2: z.string(),
-        pollDescription: z.string(),
+        pollDescription: z.string()
       })
       .nullish(),
     async resolve({ input }) {

@@ -16,19 +16,18 @@ const Home: NextPage = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    pollMutation.mutateAsync({
-      opinion1: opinion1,
-      opinion2: opinion2,
-      pollDescription: pollDescription,
-    }).then(poll=>{
-      if(poll.id){
-
-           router.push(`http://localhost:3000/vote/${poll.id}`)};
-      }
-      )
-   
+    pollMutation
+      .mutateAsync({
+        opinion1: opinion1,
+        opinion2: opinion2,
+        pollDescription: pollDescription,
+      })
+      .then((poll) => {
+        if (poll.id) {
+          router.push(`https://pollage.vercel.app/vote/${poll.id}`);
+        }
+      });
   };
-
 
   return (
     <div className="">
@@ -84,7 +83,11 @@ const Home: NextPage = () => {
               }}
             />
             <div className="btn">
-              <button disabled={pollMutation.isLoading } onClick={(e) => handleSubmit(e)} className="btn">
+              <button
+                disabled={pollMutation.isLoading}
+                onClick={(e) => handleSubmit(e)}
+                className="btn"
+              >
                 Submit poll
               </button>
             </div>
@@ -93,7 +96,7 @@ const Home: NextPage = () => {
       </div>
       <footer className="footer footer-center p-4 bg-base-300 text-base-content">
         <div className="flex flex-row">
-          <h3>From Github with</h3> <BsHeartFill className="bg-red m-1"/>
+          <h3>From Github with</h3> <BsHeartFill className="bg-red m-1" />
         </div>
       </footer>
     </div>

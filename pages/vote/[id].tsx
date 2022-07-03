@@ -60,13 +60,13 @@ const Vote: NextPage = (props: any) => {
         <MdOutlineContentCopy
           onClick={(e) => {
             navigator.clipboard.writeText(
-              `localhost:3000/vote/${props.id as string}`
+              `https://pollage.vercel.app/vote/${props.id as string}`
             ); //TODO put correct url on production
           }}
         />
       </button>
       <p className="text-2xl font-titan">{data?.name}</p>
-      <p>{`${voted}`}</p>
+     
       <div className="flex ">
         <div className="flex flex-col m-20 ">
           <button
