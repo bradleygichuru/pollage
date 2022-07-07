@@ -11,7 +11,7 @@ export const appRouter = trpc
       .object({
         opinion1: z.string(),
         opinion2: z.string(),
-        pollDescription: z.string()
+        pollDescription: z.string(),
       })
       .nullish(),
     async resolve({ input }) {
@@ -34,10 +34,17 @@ export const appRouter = trpc
     },
   })
   .mutation("cast-vote", {
-    input: z.object({ opinionId: z.string() }).nullish(),
+    input: z.object({ opinionId: z.string(), pollId: z.string() }).nullish(),
     async resolve({ input }) {
       console.log(input);
-      let result = await prisma.opinion.update({where:{id:input?.opinionId},data:{count:{increment:1}}})
+      await prisma.opinion.update({
+        where: { id: input?.opinionId },
+        data: { count: { increment: 1 } },
+      });
+      let result = await prisma.poll.findUnique({
+        where: { id: input?.pollId },
+        include: { opinions: true },
+      });
       return result;
     },
   })

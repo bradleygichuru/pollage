@@ -16,6 +16,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 ### TODO
- - [ ] use cookies or fingerprinting to prevent multiple votes on same device
+ - [x] use cookies or fingerprinting to prevent multiple votes on same device
 
 
