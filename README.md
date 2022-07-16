@@ -17,5 +17,6 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 ### TODO
  - [x] use cookies or fingerprinting to prevent multiple votes on same device
+ - [ ] use websockets to live update polls 
 
 
